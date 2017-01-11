@@ -6,7 +6,10 @@ import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.GraphDatabase;
 import org.neo4j.driver.v1.Session;
 
+import javax.print.URIException;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -34,7 +37,9 @@ public class DriverClass {
 
     protected static Driver readResources() {
         final String path = "META-INF/conf.conf";
-        try (Stream<String> stream = Files.lines(Paths.get(path))) {
+        ClassLoader classLoader = DriverClass.class.getClassLoader();
+        //File file = new File(classLoader.getResource(path).getFile());
+        try (Stream<String> stream = Files.lines(Paths.get(ClassLoader.getSystemResource(path).toURI()))) {
             Map<String, String> map = stream.map(e -> e.replace(" ", "").split("="))
                     .collect(Collectors.toMap(e -> e[0], e -> e[1]));
             Configuration configuration = new Configuration(
@@ -45,7 +50,7 @@ public class DriverClass {
             return GraphDatabase.driver("bolt://" + configuration.host + ":" + configuration.port
                     , AuthTokens.basic(configuration.user, configuration.password));
 
-        } catch (IOException e) {
+        } catch (URISyntaxException | IOException uri ) {
             try {
                 throw new ConfException("Error in conf file");
             } catch (ConfException conf) {

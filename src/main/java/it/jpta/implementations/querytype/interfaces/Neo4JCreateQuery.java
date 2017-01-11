@@ -6,5 +6,8 @@ import it.jpta.components.Node;
  * Created by simon on 11/01/17.
  */
 public interface Neo4JCreateQuery {
-    void createNodeQuery(Node node);
+
+    Neo4JCreateQuery addNodeToCreate(Node node);
+
+    String generateQuery();
 }
