@@ -1,8 +1,5 @@
 package it.jpta.implementations.queryUtils;
 
-import it.jpta.functions.Relation;
-import it.jpta.functions.LeftToRightRelation;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -50,9 +47,10 @@ public class Neo4jQueryUtils<N, R> {
         return null;
     }
 
-    protected LeftToRightRelation<N,N,R,Relation> functionRelation =
-            (startNode, endNode, relation) -> new Relation<N, N, R>(startNode, endNode, relation);
+    protected String fillNullOrEmptyString(String stringToFill) {
+        return stringToFill!=null && !stringToFill.isEmpty()
+                ? stringToFill
+                : "";
+    }
 
-    protected LeftToRightRelation<N,N,R,Relation> functionNode =
-            (startNode, endNode, relation) -> new Relation<N, N, R>(startNode, endNode, relation);
 }

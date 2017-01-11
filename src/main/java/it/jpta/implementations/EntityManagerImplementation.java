@@ -1,5 +1,6 @@
 package it.jpta.implementations;
 
+import it.jpta.implementations.querytype.interfaces.Neo4JCreateQuery;
 import it.jpta.interfaces.EntityManager;
 import org.neo4j.driver.v1.Driver;
 
@@ -16,14 +17,11 @@ public class EntityManagerImplementation implements EntityManager {
     }
 
     @Override
-    public void closeDriver(){
+    public void closeDriver() {
         driverClass.close();
     }
 
-    @Override
-    public Neo4jQuery getEmptyQuery(){
-        return new Neo4jQuery();
+    public Neo4JCreateQuery getEmptyCreateQuery() {
+        return null;
     }
-
-
 }

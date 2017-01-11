@@ -1,7 +1,6 @@
 package it.jpta.implementations;
 
-
-import it.jpta.exceptios.ConfException;
+import it.jpta.exceptions.ConfException;
 import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.GraphDatabase;
